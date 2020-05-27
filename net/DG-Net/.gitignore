@@ -1,15 +1,15 @@
 # Don't track content of these folders
-outputs/
-models/
-logs/
-__pycache__/
-__MACOSX/
+outputs/*
+models/*
+logs/*
+__pycache__/*
+__MACOSX/*
 configs/cifs9a31
 core
-temp/
-temp_output/
-center/
-rainbow/
+temp/*
+temp_output/*
+center/*
+rainbow/*
 
 # Compiled source #
 ###################
@@ -38,3 +38,7 @@ rainbow/
 *.pt
 *.pth
 
+# gitkeep #
+###########
+# however, keep the .gitkeep file
+!**/.gitkeep

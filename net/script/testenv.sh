@@ -6,7 +6,7 @@ Test_Pose_Environment() {
         python3 -m venv "poseenv"
         echo "Setting up virtual environment"
         source ./poseenv/bin/activate
-        python3 -m pip install -r "Pose-Transfer/requirements.txt"
+        python3 -m pip install -r "Pose-Transfer/requirements.txt" -i "https://mirrors.aliyun.com/pypi/simple/"
         deactivate
     fi
 }
@@ -17,7 +17,7 @@ Test_Dress_Environment() {
         python3 -m venv "dressenv"
         echo "Setting up virtual environment"
         source ./dressenv/bin/activate
-        python3 -m pip install -r "DG-Net/requirements.txt"
+        python3 -m pip install -r "DG-Net/requirements.txt" -i "https://mirrors.aliyun.com/pypi/simple/"
         deactivate
     fi
 }

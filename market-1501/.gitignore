@@ -1,0 +1,5 @@
+*
+!**/.gitignore
+!**/.gitkeep
+!*.csv
+market-gen-guide.csv

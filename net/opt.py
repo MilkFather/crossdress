@@ -6,6 +6,6 @@ def parser():
     parse = argparse.ArgumentParser()
     parse.add_argument("--dataroot", required=True)
     parse.add_argument("--seed", required=False)
-    parse.add_argument("--makesize", required=False, default=64)
+    parse.add_argument("--makesize", required=False, default=64, type=int)
 
     return parse

@@ -7,3 +7,4 @@ pillow
 pandas
 tqdm
 dominate
+progress==1.5
