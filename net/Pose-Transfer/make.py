@@ -14,6 +14,8 @@ from models.models import create_model
 import pandas as pd
 from progress.bar import IncrementalBar
 
+import pathlib
+
 
 opt = MakeOptions().parse()
 opt.nThreads = 1   # test code only supports nThreads = 1
@@ -52,6 +54,8 @@ dataset = data_loader.load_data()
 # test
 print("Making dataset phase", opt.make_phase)
 bar = IncrementalBar(max=len(dataset), message="%(index)d/%(max)d", suffix="%(elapsed_td)s/%(eta_td)s")
+
+pathlib.Path(opt.output_dir).mkdir(parents=True, exist_ok=True)
 
 for i, data in enumerate(dataset):
     if i >= len(dataset):
