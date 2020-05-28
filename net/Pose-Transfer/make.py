@@ -26,8 +26,8 @@ model = model.eval()
 
 # read generation csv guide
 guide_file = pd.read_csv(os.path.join(opt.dataroot, "market-gen-guide.csv"), header=0)
-shape_dir = os.path.join(opt.dataroot, "bounding_box_train")
-shape_files = guide_file["shape"]
+opt.shape_dir = os.path.join(opt.dataroot, "bounding_box_train")
+opt.shape_files = guide_file["shape"]
 if opt.make_phase == 1:
     opt.source_dir = os.path.join(opt.dataroot, "bounding_box_train")
     opt.source_files = guide_file["shape"]
