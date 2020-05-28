@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 Test_Pose_Environment() {
     if [ ! -d "poseenv" ]; then

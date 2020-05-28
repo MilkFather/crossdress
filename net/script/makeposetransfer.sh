@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 . script/testenv.sh
 Test_Pose_Environment
 

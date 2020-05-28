@@ -1,7 +1,4 @@
-#!/bin/zsh
-
-# $1: dataroot $2 envroot
-
+#!/bin/bash
 
 DeleteGeneratedDataset () {
     dataroot=$1
