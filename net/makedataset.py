@@ -2,6 +2,7 @@ import opt
 import os
 import random
 import pandas as pd
+import hashlib
 from progress.bar import IncrementalBar
 
 def DatasetGenerateGuide(opts):
@@ -15,7 +16,7 @@ def DatasetGenerateGuide(opts):
     anno_file = pd.read_csv(os.path.join(opts.dataroot, "market-annotation-train.csv"), header=0, sep=":")
     file_ls = anno_file["name"]
 
-    dataset_gen = pd.DataFrame(columns=["shape", "pose", "cloth"])
+    dataset_gen = pd.DataFrame(columns=["shape", "pose", "cloth", "phase1", "phase2"])
 
     print("Generating dataset generation guide...")
     bar = IncrementalBar(max=opts.makesize, message="%(index)d/%(max)d", suffix="%(elapsed_td)s/%(eta_td)s")
@@ -42,7 +43,11 @@ def DatasetGenerateGuide(opts):
             if cloth_person_id != shape_person_id:
                 cloth_file_should_done = True
 
-        dataset_gen.loc[len(dataset_gen)] = [shape_file, pose_file, cloth_file]
+        phase1_filename = shape_person_id + "_gen_" + hashlib.md5((shape_file + pose_file + cloth_file + "phase1").encode()).hexdigest()[:6] + ".jpg"
+
+        phase2_filename = shape_person_id + "_gen_" + hashlib.md5((shape_file + pose_file + cloth_file + "phase2").encode()).hexdigest()[:6] + ".jpg"
+
+        dataset_gen.loc[len(dataset_gen)] = [shape_file, pose_file, cloth_file, phase1_filename, phase2_filename]
         bar.next()
 
     bar.finish()
@@ -58,7 +63,7 @@ def PoseTransferDataPrep(opts):
         os.system("./script/makeposemap.sh \"{0}\"".format(opts.dataroot))
 
 def PoseTransferMakeImage(opts):
-    os.system("./script/makeposetransfer.sh")
+    os.system("./script/makeposetransfer.sh \"{0}\" \"{1}\" 1".format(opts.dataroot, "Pose-Transfer/checkpoint"))
 
 
 if __name__ == "__main__":
