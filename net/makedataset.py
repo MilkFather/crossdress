@@ -73,4 +73,4 @@ if __name__ == "__main__":
 
     DatasetGenerateGuide(opts)
     PoseTransferDataPrep(opts)
-    #PoseTransferMakeImage(opts)
+    PoseTransferMakeImage(opts)
