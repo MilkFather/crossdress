@@ -27,6 +27,7 @@ annotations_file2 = os.path.join(opt.dataroot, 'market-annotation-test.csv') #po
 save_path2 = os.path.join(opt.dataroot, 'bounding_box_testK') #path to store pose maps
 
 pathlib.Path(save_path).mkdir(parents=True, exist_ok=True)
+pathlib.Path(save_path2).mkdir(parents=True, exist_ok=True)
 
 def load_pose_cords_from_strings(y_str, x_str):
     y_cords = json.loads(y_str)
