@@ -16,8 +16,8 @@ class KeyGenDataset(BaseDataset):
 
         self.source_dir = opt.source_dir
         self.source_files = opt.source_files
-        self.pose_dir = opt.pose_dir
-        self.pose_files = opt.pose_files
+        self.pose_dir = opt.pose_source_dir
+        self.pose_files = opt.pose_source_files
         self.shape_files = opt.shape_files
        
         self.dir_K = os.path.join(opt.dataroot, 'bounding_box_trainK') #keypoints
