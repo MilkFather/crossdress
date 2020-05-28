@@ -22,6 +22,10 @@ img_dir  = os.path.join(opt.dataroot, "bounding_box_train") #raw image path
 annotations_file = os.path.join(opt.dataroot, 'market-annotation-train.csv') #pose annotation path
 save_path = os.path.join(opt.dataroot, 'bounding_box_trainK') #path to store pose maps
 
+img_dir2  = os.path.join(opt.dataroot, "bounding_box_test") #raw image path
+annotations_file2 = os.path.join(opt.dataroot, 'market-annotation-test.csv') #pose annotation path
+save_path2 = os.path.join(opt.dataroot, 'bounding_box_testK') #path to store pose maps
+
 pathlib.Path(save_path).mkdir(parents=True, exist_ok=True)
 
 def load_pose_cords_from_strings(y_str, x_str):
@@ -62,4 +66,4 @@ def compute_pose(image_dir, annotations_file, savePath):
     bar.finish()
     
 compute_pose(img_dir, annotations_file, save_path)
-
+compute_pose(img_dir2, annotations_file2, save_path2)
