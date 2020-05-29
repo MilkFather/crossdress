@@ -65,12 +65,19 @@ def PoseTransferDataPrep(opts):
 def PoseTransferMakeImage(opts):
     os.system("./script/makeposetransfer.sh \"{0}\" \"{1}\" 1".format(opts.dataroot, "Pose-Transfer/checkpoint"))
 
+def DGNetMakeImage(opts):
+    os.system("./script/makedgnet.sh \"{0}\" 2".format(opts.dataroot))
+
 
 if __name__ == "__main__":
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
     opts = opt.parser().parse_args()
 
-    DatasetGenerateGuide(opts)
     PoseTransferDataPrep(opts)
+
+    if opts.use_existing_guide:
+        DatasetGenerateGuide(opts)
+
     PoseTransferMakeImage(opts)
+    DGNetMakeImage(opts)
