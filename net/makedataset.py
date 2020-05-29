@@ -76,8 +76,10 @@ if __name__ == "__main__":
 
     PoseTransferDataPrep(opts)
 
-    if opts.use_existing_guide:
+    if not opts.use_existing_guide:
         DatasetGenerateGuide(opts)
+    else:
+        print("--use_existing_guide makes this script use an existing generation guide")
 
     PoseTransferMakeImage(opts)
     DGNetMakeImage(opts)
