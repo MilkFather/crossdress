@@ -111,7 +111,7 @@ image_datasets_structure = ImageListDataset(
     transform=data_transforms
 )
 image_datasets_content = ImageListDataset(
-    opts.source_dir,
+    opts.cloth_source_dir,
     opts.cloth_source_files,
     transform=data_transforms
 )
