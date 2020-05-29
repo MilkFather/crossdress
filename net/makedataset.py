@@ -62,14 +62,15 @@ def PoseTransferDataPrep(opts):
         # run bash script to call virtualenv
         os.system("./script/makeposemap.sh \"{0}\"".format(opts.dataroot))
 
-def PoseTransferMakeImage(opts):
-    os.system("./script/makeposetransfer.sh \"{0}\" \"{1}\" 1".format(opts.dataroot, "Pose-Transfer/checkpoint"))
+def PoseTransferMakeImage(opts, phase):
+    os.system("./script/makeposetransfer.sh \"{0}\" \"{1}\" {2}".format(opts.dataroot, "Pose-Transfer/checkpoint", phase))
 
-def DGNetMakeImage(opts):
-    os.system("./script/makedgnet.sh \"{0}\" 2".format(opts.dataroot))
+def DGNetMakeImage(opts, phase):
+    os.system("./script/makedgnet.sh \"{0}\" {1}".format(opts.dataroot, phase))
 
 
 if __name__ == "__main__":
+    phase = 1
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
     opts = opt.parser().parse_args()
@@ -81,5 +82,8 @@ if __name__ == "__main__":
     else:
         print("--use_existing_guide makes this script use an existing generation guide")
 
-    PoseTransferMakeImage(opts)
-    DGNetMakeImage(opts)
+    #PoseTransferMakeImage(opts, phase)
+    DGNetMakeImage(opts, phase)
+    phase += 1
+    #DGNetMakeImage(opts, phase)
+    PoseTransferMakeImage(opts, phase)
