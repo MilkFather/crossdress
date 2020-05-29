@@ -25,8 +25,8 @@ DeleteEnv () {
     if [ -d "$root/poseenv" ]; then
         rm -rf "$root/poseenv" 
     fi
-    if [ -d "$root/clothenv" ]; then
-        rm -rf "$root/clothenv"
+    if [ -d "$root/dressenv" ]; then
+        rm -rf "$root/dressenv"
     fi
 }
 
