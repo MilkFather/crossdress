@@ -149,7 +149,7 @@ pathlib.Path(opts.output_dir).mkdir(parents=True, exist_ok=True)
 
 gray = to_gray(False)
 
-for i in range(len(image_datasets_structure)):
+for idx in range(len(image_datasets_structure)):
     data2 = next(iter(dataloader_structure))
     bg_img, _ = data2
     bg_img = gray(bg_img)
@@ -172,7 +172,7 @@ for i in range(len(image_datasets_structure)):
             #tmp = pad(tmp, pad=npad)
             #im[count] = tmp #np.concatenate((im[count], white_col, tmp), axis=1)
             pic = Image.fromarray(tmp.astype('uint8'))
-            pic.save(os.path.join(opts.output_dir, opts.output_files[i]))
+            pic.save(os.path.join(opts.output_dir, opts.output_files[idx]))
     bar.next()
 bar.finish()
 
