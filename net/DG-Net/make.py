@@ -175,7 +175,7 @@ for idx in range(len(image_datasets_structure)):
             #tmp = pad(tmp, pad=npad)
             #im[count] = tmp #np.concatenate((im[count], white_col, tmp), axis=1)
             pic = Image.fromarray(tmp.astype('uint8'))
-            pic.resize((64, 128))
+            pic = pic.resize((64, 128))
             pic.save(os.path.join(opts.output_dir, opts.output_files[idx]))
     bar.next()
 bar.finish()
