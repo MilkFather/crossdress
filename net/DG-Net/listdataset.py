@@ -1,4 +1,5 @@
-from torchvision.datasets.vision import VisionDataset, default_loader
+from torchvision.datasets.vision import VisionDataset
+from torchvision.datasets.folder import default_loader
 
 from PIL import Image
 

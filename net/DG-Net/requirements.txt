@@ -1,6 +1,6 @@
 numpy
 torch==1.0.0
-torchvision==0.2.1
+torchvision==0.3.0
 pandas
 progress==1.5
 pillow
