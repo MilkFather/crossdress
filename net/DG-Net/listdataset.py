@@ -15,6 +15,7 @@ class ImageListDataset(VisionDataset):
 
         samples = [(filels[i], filels[i].split("_")[0]) for i in range(len(filels))]
         
+        self.root = root
         self.loader = loader
         self.samples = samples
         self.imgs = self.samples
@@ -22,7 +23,7 @@ class ImageListDataset(VisionDataset):
 
     def __getitem__(self, index):
         path, target = self.samples[index]
-        sample = self.loader(path)
+        sample = self.loader(os.path.join(self.root, path))
         if self.transform is not None:
             sample = self.transform(sample)
         if self.target_transform is not None:
