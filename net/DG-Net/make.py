@@ -24,7 +24,7 @@ import pathlib
 
 name = 'E0.5new_reid0.5_w30000' 
 
-if not os.path.isdir('./DG-Net/outputs/%s'%name): # this hard-coded file path is important!
+if not os.path.isdir('./outputs/%s'%name):
     assert 0, "please change the name to your model name"
 
 parser = argparse.ArgumentParser()
