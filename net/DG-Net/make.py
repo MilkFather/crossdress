@@ -149,13 +149,16 @@ pathlib.Path(opts.output_dir).mkdir(parents=True, exist_ok=True)
 
 gray = to_gray(False)
 
+d_structure_iter = iter(dataloader_structure)
+d_content_iter = iter(dataloader_content)
+
 for idx in range(len(image_datasets_structure)):
-    data2 = next(iter(dataloader_structure))
+    data2 = next(d_structure_iter)
     bg_img, _ = data2
     bg_img = gray(bg_img)
     bg_img = Variable(bg_img.cuda())
 
-    data = next(iter(dataloader_content))
+    data = next(d_content_iter)
     id_img, _ = data
     id_img = Variable(id_img.cuda())
     n, c, h, w = id_img.size()
