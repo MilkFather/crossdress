@@ -5,3 +5,4 @@ pandas
 progress==1.5
 pillow
 pyyaml
+opencv-python
