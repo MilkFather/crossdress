@@ -115,8 +115,8 @@ image_datasets_content = ImageListDataset(
     opts.cloth_source_files,
     transform=data_transforms
 )
-#dataloader_content = torch.utils.data.DataLoader(image_datasets_content, batch_size=1, shuffle=False, num_workers=1)
-#dataloader_structure = torch.utils.data.DataLoader(image_datasets_structure, batch_size=1, shuffle=False, num_workers=1)
+dataloader_content = torch.utils.data.DataLoader(image_datasets_content, batch_size=1, shuffle=False, num_workers=1)
+dataloader_structure = torch.utils.data.DataLoader(image_datasets_structure, batch_size=1, shuffle=False, num_workers=1)
 
 #dataloader_structure = torch.utils.data.DataLoader(image_datasets, batch_size=num, shuffle=False, num_workers=1)
 #image_paths = image_datasets.imgs
@@ -150,11 +150,13 @@ pathlib.Path(opts.output_dir).mkdir(parents=True, exist_ok=True)
 gray = to_gray(False)
 
 for i in range(len(image_datasets_structure)):
-    bg_img, _ = image_datasets_structure[i]
+    data2 = next(iter(dataloader_structure))
+    bg_img, _ = data2
     bg_img = gray(bg_img)
     bg_img = Variable(bg_img.cuda())
 
-    id_img, _ = image_datasets_content[i]
+    data = next(iter(dataloader_content))
+    id_img, _ = data
     id_img = Variable(id_img.cuda())
     n, c, h, w = id_img.size()
 
