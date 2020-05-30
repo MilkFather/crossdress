@@ -34,11 +34,13 @@ class Market1501_EX(BaseImageDataset):
     """
     dataset_dir = 'market-1501'
 
-    def __init__(self, root='data', verbose=True, **kwargs):
+    def __init__(self, root='data', market1501_extra='real', verbose=True, **kwargs):
         super(Market1501_EX, self).__init__()
         self.dataset_dir = osp.join(root, self.dataset_dir)
 
         market1501_data = market1501_extra.split('+')
+        if verbose:
+            print("Market1501_EX: Using data from", market1501_data)
 
         self.train_dir = []
         if 'real' in market1501_data:
