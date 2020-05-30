@@ -126,7 +126,7 @@ class Market1501_EX(BaseImageDataset):
                 if pattern.search(img_path) is not None:
                     pid, _ = map(int, pattern.search(img_path).groups())
                 else:
-                    pid = map(int, pattern2.search(img_path).groups())
+                    pid = list(map(int, pattern2.search(img_path).groups()))[0]
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 pid_container.add(pid)
@@ -136,7 +136,7 @@ class Market1501_EX(BaseImageDataset):
                 if pattern.search(img_path) is not None:
                     pid, camid = map(int, pattern.search(img_path).groups())
                 else:
-                    pid = map(int, pattern2.search(img_path).groups())
+                    pid = list(map(int, pattern2.search(img_path).groups()))[0]
                     camid = 'gen'
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
