@@ -123,7 +123,7 @@ class Market1501_EX(BaseImageDataset):
 
             pid_container = set()
             for img_path in img_paths:
-                if pattern.search(img_path).groups() is not None:
+                if pattern.search(img_path) is not None:
                     pid, _ = map(int, pattern.search(img_path).groups())
                 else:
                     pid, _ = map(int, pattern2.search(img_path).groups())
@@ -133,7 +133,7 @@ class Market1501_EX(BaseImageDataset):
             pid2label = {pid: label for label, pid in enumerate(pid_container)}
 
             for img_path in img_paths:
-                if pattern.search(img_path).groups() is not None:
+                if pattern.search(img_path) is not None:
                     pid, camid = map(int, pattern.search(img_path).groups())
                 else:
                     pid, camid = map(int, pattern2.search(img_path).groups())
