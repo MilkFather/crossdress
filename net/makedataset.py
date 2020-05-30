@@ -82,9 +82,12 @@ if __name__ == "__main__":
     else:
         print("--use_existing_guide makes this script use an existing generation guide")
 
+    if len(opts.phases) <= 0:
+        raise Exception("Too few phases. Specify at least one phase")
+    if len(opts.phases) > 2:
+        raise Exception("Too many phases. Specify at most phases")
+
     for phasestr in opts.phases:
-        if phase > 2:
-            raise Exception("Too many phases. Maximum two phases")
         if phasestr == "pose":
             PoseTransferMakeImage(opts, phase)
         elif phasestr == "cloth":
