@@ -28,7 +28,7 @@ Test_ABD_Environment() {
         virtualenv "abdenv"
         echo "Setting up virtual environment"
         source ./abdenv/bin/activate
-        python3 -m pip install -r "ABD-Net/requirenemts.txt"
+        python3 -m pip install -r "ABD-Net/requirements.txt"
         deactivate
     fi
 }
