@@ -38,6 +38,7 @@ class Market1501_EX(BaseImageDataset):
         super(Market1501_EX, self).__init__()
         self.dataset_dir = osp.join(root, self.dataset_dir)
 
+        print(kwargs)
 
         market1501_data = kwargs["market1501_extra"].split('+')
         if verbose:
