@@ -79,7 +79,6 @@ if __name__ == "__main__":
 
     if not opts.use_existing_guide:
         DatasetGenerateGuide(opts)
-        pass
     else:
         print("--use_existing_guide makes this script use an existing generation guide")
 
