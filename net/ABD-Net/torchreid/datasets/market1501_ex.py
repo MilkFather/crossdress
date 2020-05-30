@@ -137,7 +137,7 @@ class Market1501_EX(BaseImageDataset):
                     pid, camid = map(int, pattern.search(img_path).groups())
                 else:
                     pid = list(map(int, pattern2.search(img_path).groups()))[0]
-                    camid = 'gen'
+                    camid = 7  # pseudo camera id
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 assert -1 <= pid <= 1501  # pid == 0 means background
