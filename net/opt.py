@@ -8,5 +8,6 @@ def parser():
     parse.add_argument("--seed", required=False)
     parse.add_argument("--makesize", required=False, default=64, type=int)
     parse.add_argument("--use_existing_guide", action="store_true")
+    parse.add_argument("--phases", required=True, type=str, nargs=argparse.REMAINDER)
 
     return parse

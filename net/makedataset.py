@@ -79,11 +79,17 @@ if __name__ == "__main__":
 
     if not opts.use_existing_guide:
         DatasetGenerateGuide(opts)
+        pass
     else:
         print("--use_existing_guide makes this script use an existing generation guide")
 
-    #PoseTransferMakeImage(opts, phase)
-    DGNetMakeImage(opts, phase)
-    phase += 1
-    #DGNetMakeImage(opts, phase)
-    PoseTransferMakeImage(opts, phase)
+    for phasestr in opts.phases:
+        if phase > 2:
+            raise Exception("Too many phases. Maximum two phases")
+        if phasestr == "pose":
+            PoseTransferMakeImage(opts, phase)
+        elif phasestr == "cloth":
+            DGNetMakeImage(opts, phase)
+        else:
+            raise Exception("Unknown phase string \"{0}\". Please enter an enumeration of [pose, cloth]!")
+        phase += 1
