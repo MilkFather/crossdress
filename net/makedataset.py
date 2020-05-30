@@ -85,7 +85,7 @@ if __name__ == "__main__":
     if len(opts.phases) <= 0:
         raise Exception("Too few phases. Specify at least one phase")
     if len(opts.phases) > 2:
-        raise Exception("Too many phases. Specify at most phases")
+        raise Exception("Too many phases. Specify at most two phases")
 
     for phasestr in opts.phases:
         if phasestr == "pose":
