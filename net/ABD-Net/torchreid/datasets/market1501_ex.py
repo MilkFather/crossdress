@@ -115,7 +115,7 @@ class Market1501_EX(BaseImageDataset):
 
     def _process_dirs(self, dir_path, relabel=False):
         pattern = re.compile(r'([-\d]+)_c(\d)')
-        pattern2 = re.compile(r'([-\d]+)_gen_(\w+)')
+        pattern2 = re.compile(r'([-\d]+)_gen')
         dataset = []
 
         for _dir in dir_path:
@@ -126,7 +126,7 @@ class Market1501_EX(BaseImageDataset):
                 if pattern.search(img_path) is not None:
                     pid, _ = map(int, pattern.search(img_path).groups())
                 else:
-                    pid, _ = map(int, pattern2.search(img_path).groups())
+                    pid = map(int, pattern2.search(img_path).groups())
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 pid_container.add(pid)
@@ -136,7 +136,8 @@ class Market1501_EX(BaseImageDataset):
                 if pattern.search(img_path) is not None:
                     pid, camid = map(int, pattern.search(img_path).groups())
                 else:
-                    pid, camid = map(int, pattern2.search(img_path).groups())
+                    pid = map(int, pattern2.search(img_path).groups())
+                    camid = 'gen'
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 assert -1 <= pid <= 1501  # pid == 0 means background
