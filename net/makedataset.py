@@ -1,4 +1,4 @@
-import opt
+from opt import MakeOptions
 import os
 import random
 import pandas as pd
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     phase = 1
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
-    opts = opt.parser().parse_args()
+    opts = MakeOptions().parse_args()
 
     PoseTransferDataPrep(opts)
 
