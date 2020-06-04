@@ -20,7 +20,7 @@ python3 train.py -s market1501_ex -t market1501_ex \
     --optim adam --lr 0.0003 \
     --stepsize 20 40 \
     --gpu-devices 0,1,2,3 \
-    --max-epoch 500 \
+    --max-epoch 1200 \
     --save-dir model \
     --arch resnet50 \
     --use-of \

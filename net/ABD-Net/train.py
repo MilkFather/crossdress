@@ -165,12 +165,12 @@ def main():
             state_dict = model.module.state_dict()
         else:
             state_dict = model.state_dict()
-
+        """
         save_checkpoint({
             'state_dict': state_dict,
             'rank1': 0,
             'epoch': epoch,
-        }, False, osp.join(args.save_dir, 'checkpoint_ep' + str(epoch + 1) + '.pth.tar'))
+        }, False, osp.join(args.save_dir, 'checkpoint_ep' + str(epoch + 1) + '.pth.tar'))"""
 
         scheduler.step()
 
