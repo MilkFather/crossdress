@@ -20,3 +20,4 @@ class TestOptions(argparse.ArgumentParser):
 
         self.add_argument("--dataroot", required=True)
         self.add_argument("--use_data", required=True, nargs='+')
+        self.add_argument("--use_resnet", action="store_true")
