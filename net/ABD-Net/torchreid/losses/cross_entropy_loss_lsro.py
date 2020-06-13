@@ -28,15 +28,13 @@ class CrossEntropyLossLSRO(nn.Module):
     def apply_loss(self, inputs, targets):
 
         log_probs = self.logsoftmax(inputs)
-        print(inputs.shape)
-        print(inputs)
-        print(targets.shape)
-        print(targets)
-        if targets == -2:
-            # targets = torch.ones(log_probs.size()) / self.num_classes
-            pass
-        else:
-            targets = torch.zeros(log_probs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1)
+
+        targets = torch.zeros(log_probs.size())
+        for idx, label in enumerate(targets):
+            if label == -2:
+                targets[idx, :] = torch.ones(log_probs.size()[1]) / self.num_classes
+            else:
+                targets[idx, label] = 1
         if self.use_gpu:
             targets = targets.cuda()
         targets = (1 - self.epsilon) * targets + self.epsilon / self.num_classes
@@ -47,7 +45,7 @@ class CrossEntropyLossLSRO(nn.Module):
         """
         Args:
         - inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)
-        - targets: ground truth labels with shape (num_classes)
+        - targets: ground truth labels with shape (batch_size)
         """
 
         if not isinstance(inputs, tuple):
