@@ -10,7 +10,7 @@ python3 train.py -s market1501_ex -t market1501_ex \
     --market1501_extra $2 \
     --flip-eval --eval-freq 1 \
     --label-smooth \
-    --criterion xentlsro \
+    --criterion xent \
     --lambda-htri 0.1  \
     --data-augment crop random-erase \
     --margin 1.2 \
