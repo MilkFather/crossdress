@@ -47,6 +47,12 @@ def get_criterion(num_classes: int, use_gpu: bool, args):
 
         from torchreid.losses.cross_entropy_loss import CrossEntropyLoss
         criterion = CrossEntropyLoss(num_classes, use_gpu=use_gpu, label_smooth=args.label_smooth)
+    
+    elif args.criterion == 'xentlsro':
+
+        from torchreid.losses.cross_entropy_loss_lsro import CrossEntropyLossLSRO
+        criterion = CrossEntropyLoss(num_classes, use_gpu=use_gpu, label_smooth=args.label_smooth)
+        
     else:
         raise RuntimeError('Unknown criterion {}'.format(args.criterion))
 
