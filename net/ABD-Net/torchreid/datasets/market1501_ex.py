@@ -59,7 +59,7 @@ class Market1501_EX(BaseImageDataset):
 
         self._check_before_run()
 
-        train = self._process_dirs(self.train_dir, relabel=True)
+        train = self._process_dirs(self.train_dir, relabel=False)
         query = self._process_dir(self.query_dir, relabel=False)
         gallery = self._process_dir(self.gallery_dir, relabel=False)
 
