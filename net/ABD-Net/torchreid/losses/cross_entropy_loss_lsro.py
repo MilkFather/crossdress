@@ -35,7 +35,7 @@ class CrossEntropyLossLSRO(nn.Module):
             if label == -2:
                 targets2[idx, :] = torch.ones(log_probs.size()[1]) / self.num_classes
             else:
-                targets2[idx, label] = 1
+                targets2[idx, label - 1] = 1  # we need to cope with the outcome of the -2 special class
         if self.use_gpu:
             targets2 = targets2.cuda()
         targets2 = (1 - self.epsilon) * targets2 + self.epsilon / self.num_classes
