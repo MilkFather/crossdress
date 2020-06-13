@@ -31,8 +31,7 @@ class CrossEntropyLossLSRO(nn.Module):
 
         targets2 = torch.zeros(log_probs.size())
         for idx, label in enumerate(targets):
-            print(idx, label)
-            if label == -2:
+            if label == 0:
                 targets2[idx, :] = torch.ones(log_probs.size()[1]) / self.num_classes
             else:
                 targets2[idx, label - 1] = 1  # we need to cope with the outcome of the -2 special class
