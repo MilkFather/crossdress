@@ -127,7 +127,7 @@ class Market1501_EX(BaseImageDataset):
 
             pid_container = set()
             pid_container.add(-2)  # this makes sure that -2 is always the first
-            
+
             for img_path in img_paths:
                 if pattern.search(img_path) is not None:
                     pid, _ = map(int, pattern.search(img_path).groups())
@@ -140,6 +140,8 @@ class Market1501_EX(BaseImageDataset):
 
         # second pass: make info
         for _dir in dir_path:
+            img_paths = glob.glob(osp.join(_dir, '*.jpg'))
+            
             for img_path in img_paths:
                 if pattern.search(img_path) is not None:
                     pid, camid = map(int, pattern.search(img_path).groups())
