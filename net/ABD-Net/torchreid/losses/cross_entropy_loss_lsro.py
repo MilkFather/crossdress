@@ -28,6 +28,7 @@ class CrossEntropyLossLSRO(nn.Module):
     def apply_loss(self, inputs, targets):
 
         log_probs = self.logsoftmax(inputs)
+        print(inputs)
         print(targets)
         if targets == -2:
             # targets = torch.ones(log_probs.size()) / self.num_classes
