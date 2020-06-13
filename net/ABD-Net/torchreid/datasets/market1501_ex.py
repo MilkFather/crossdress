@@ -72,11 +72,13 @@ class Market1501_EX(BaseImageDataset):
         self.gallery = gallery
 
         # Hardcoded information for train pids and train cams
-        self.num_train_pids = 751
-        self.num_train_cams = 6
-        _, self.num_train_imgs, _ = self.get_imagedata_info(self.train)
+        self.num_train_pids, self.num_train_imgs, self.num_train_cams = self.get_imagedata_info(self.train)
         self.num_query_pids, self.num_query_imgs, self.num_query_cams = self.get_imagedata_info(self.query)
         self.num_gallery_pids, self.num_gallery_imgs, self.num_gallery_cams = self.get_imagedata_info(self.gallery)
+
+        # get rid of train pid "-2" and train cid "-2"
+        self.num_train_pids -= 1
+        self.num_train_cams -= 1
 
     def _check_before_run(self):
         """Check if all files are available before going deeper"""
@@ -138,10 +140,12 @@ class Market1501_EX(BaseImageDataset):
                 pid_container.add(pid)
             pid2label = {pid: label for label, pid in enumerate(pid_container)}
 
+        print(pid2label)
+
         # second pass: make info
         for _dir in dir_path:
             img_paths = glob.glob(osp.join(_dir, '*.jpg'))
-            
+
             for img_path in img_paths:
                 if pattern.search(img_path) is not None:
                     pid, camid = map(int, pattern.search(img_path).groups())
