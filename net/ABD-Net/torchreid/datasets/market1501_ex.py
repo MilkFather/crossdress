@@ -59,7 +59,7 @@ class Market1501_EX(BaseImageDataset):
 
         self._check_before_run()
 
-        train = self._process_dirs(self.train_dir, relabel=False)
+        train = self._process_dirs(self.train_dir, relabel=True)
         query = self._process_dir(self.query_dir, relabel=False)
         gallery = self._process_dir(self.gallery_dir, relabel=False)
 
@@ -72,9 +72,9 @@ class Market1501_EX(BaseImageDataset):
         self.gallery = gallery
 
         # Hardcoded information for train pids and train cams
-        #self. = 751
-        #self. = 6
-        self.num_train_pids, self.num_train_imgs, self.num_train_cams = self.get_imagedata_info(self.train)
+        self.num_train_pids = 751
+        self.num_train_cams = 6
+        _, self.num_train_imgs, _ = self.get_imagedata_info(self.train)
         self.num_query_pids, self.num_query_imgs, self.num_query_cams = self.get_imagedata_info(self.query)
         self.num_gallery_pids, self.num_gallery_imgs, self.num_gallery_cams = self.get_imagedata_info(self.gallery)
 
@@ -138,8 +138,8 @@ class Market1501_EX(BaseImageDataset):
             for img_path in img_paths:
                 if pattern.search(img_path) is not None:
                     pid, camid = map(int, pattern.search(img_path).groups())
-                else:
-                    pid = list(map(int, pattern2.search(img_path).groups()))[0]
+                elif pattern2.search(img_path) is not None:
+                    pid = -2
                     camid = -1  # pseudo camera id
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
