@@ -24,6 +24,7 @@ python3 train.py -s market1501_ex -t market1501_ex \
     --save-dir model \
     --arch resnet50 \
     --use-of \
+    --branches abd \
     --abd-dan cam pam \
     --abd-np 2 \
     --shallow-cam \
