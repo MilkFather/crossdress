@@ -32,14 +32,14 @@ class CrossEntropyLossLSRO(nn.Module):
         targets2 = torch.zeros(log_probs.size())
         for idx, label in enumerate(gen_info):
             if len(label) == 1:
-                targets2[idx, label[0]] = 1
+                targets2[idx, label[0]] += 1
             elif len(label) == 2:
-                targets2[idx, label[0]] = 1 / 2
-                targets2[idx, label[1]] = 1 / 2
+                targets2[idx, label[0]] += 1 / 2
+                targets2[idx, label[1]] += 1 / 2
             elif len(label) == 3:
-                targets2[idx, label[0]] = 1 / 3
-                targets2[idx, label[1]] = 1 / 3
-                targets2[idx, label[2]] = 1 / 3
+                targets2[idx, label[0]] += 1 / 3
+                targets2[idx, label[1]] += 1 / 3
+                targets2[idx, label[2]] += 1 / 3
         if self.use_gpu:
             targets2 = targets2.cuda()
         targets2 = (1 - self.epsilon) * targets2 + self.epsilon / self.num_classes
