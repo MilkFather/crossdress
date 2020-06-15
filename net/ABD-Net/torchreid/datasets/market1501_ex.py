@@ -13,6 +13,7 @@ import os.path as osp
 from scipy.io import loadmat
 import numpy as np
 import h5py
+import pandas as pd
 from scipy.misc import imsave
 
 from .bases import BaseImageDataset
@@ -38,22 +39,38 @@ class Market1501_EX(BaseImageDataset):
         super(Market1501_EX, self).__init__()
         self.dataset_dir = osp.join(root, self.dataset_dir)
 
+        # read info file, for reference
+        dataset_info = pd.read_csv(osp.join(self.dataset_dir, "market-annotation-train.csv"), header=0)
+        self.shape = dataset_info["shape"]
+        self.pose = dataset_info["pose"]
+        self.cloth = dataset_info["cloth"]
+        self.phase1 = dataset_info["phase1"]
+        self.phase2 = dataset_info["phase2"]
+
+        # create some constants
+        self.real_dir = osp.join(self.dataset_dir, 'bounding_box_train')
+        self.pose_dir = osp.join(self.dataset_dir, 'bounding_box_train_pose')
+        self.cloth_dir = osp.join(self.dataset_dir, 'bounding_box_train_cloth')
+        self.posecloth_dir = osp.join(self.dataset_dir, 'bounding_box_train_pose_cloth')
+        self.clothpose_dir = osp.join(self.dataset_dir, 'bounding_box_train_cloth_pose')
+
+        # make a convenient mapping from dataset string to data directory
+        data_mapping = {'real': self.real_dir, 
+                        'pose': self.pose_dir, 
+                        'cloth': self.cloth_dir, 
+                        'pose-cloth': self.posecloth_dir, 
+                        'cloth-pose': self.clothpose_dir}
+
+        # retrive the data we want
         market1501_data = market1501_extra.split('+')
         if verbose:
             print("Market1501_EX: Using data from", market1501_data)
 
+        # push data directories into a list
         self.train_dir = []
-        if 'real' in market1501_data:
-            self.train_dir.append(osp.join(self.dataset_dir, 'bounding_box_train'))
-        if 'pose' in market1501_data:
-            self.train_dir.append(osp.join(self.dataset_dir, 'bounding_box_train_pose'))
-        if 'cloth' in market1501_data:
-            self.train_dir.append(osp.join(self.dataset_dir, 'bounding_box_train_cloth'))
-        if 'pose-cloth' in market1501_data:
-            self.train_dir.append(osp.join(self.dataset_dir, 'bounding_box_train_pose_cloth'))
-        if 'cloth-pose' in market1501_data:
-            self.train_dir.append(osp.join(self.dataset_dir, 'bounding_box_train_cloth_pose'))
-
+        for data_itm in market1501_data:
+            self.train_dir.append(data_mapping[data_itm])
+        # we don't change how we handle query and gallery
         self.query_dir = osp.join(self.dataset_dir, 'query')
         self.gallery_dir = osp.join(self.dataset_dir, 'bounding_box_test')
 
@@ -118,10 +135,10 @@ class Market1501_EX(BaseImageDataset):
         pattern2 = re.compile(r'([-\d]+)_gen')
         dataset = []
 
+        pid_container = set()
         for _dir in dir_path:
             img_paths = glob.glob(osp.join(_dir, '*.jpg'))
 
-            pid_container = set()
             for img_path in img_paths:
                 if pattern.search(img_path) is not None:
                     pid, _ = map(int, pattern.search(img_path).groups())
@@ -130,14 +147,19 @@ class Market1501_EX(BaseImageDataset):
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 pid_container.add(pid)
-            pid2label = {pid: label for label, pid in enumerate(pid_container)}
 
+        pid2label = {pid: label for label, pid in enumerate(pid_container)}
+
+        for _dir in dir_path:
+            img_paths = glob.glob(osp.join(_dir, '*.jpg'))
+                
             for img_path in img_paths:
-                if pattern.search(img_path) is not None:
+                if _dir == self.real_dir: # use pattern 1
                     pid, camid = map(int, pattern.search(img_path).groups())
-                else:
+                else: # use pattern 2
                     pid = list(map(int, pattern2.search(img_path).groups()))[0]
-                    camid = 7  # pseudo camera id
+                    camid = 1  # fake camera id, actually we don't care
+
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 assert -1 <= pid <= 1501  # pid == 0 means background
@@ -146,6 +168,30 @@ class Market1501_EX(BaseImageDataset):
                     camid -= 1  # index starts from 0
                 if relabel:
                     pid = pid2label[pid]
-                dataset.append((img_path, pid, camid))
+
+                # we need to find out how generated files come from
+                if _dir == self.real_dir:
+                    gen_info = [pid]
+                elif _dir == self.pose_dir:
+                    origin_pose = self.pose[self.phase1.index(img_path.split('/')[-1])]
+                    origin_pose_pid, _ = map(int, pattern.search(origin_pose).groups())
+                    origin_pose_pid = pid2label[origin_pose_pid]
+                    gen_info = [pid, origin_pose_pid]
+                elif _dir == self.cloth_dir:
+                    origin_cloth = self.cloth[self.phase1.index(img_path.split('/')[-1])]
+                    origin_cloth_pid, _ = map(int, pattern.search(origin_cloth).groups())
+                    origin_cloth_pid = pid2label[origin_cloth_pid]
+                    gen_info = [pid, origin_cloth_pid]
+                else:
+                    origin_pose = self.pose[self.phase2.index(img_path.split('/')[-1])]
+                    origin_pose_pid, _ = map(int, pattern.search(origin_pose).groups())
+                    origin_pose_pid = pid2label[origin_pose_pid]
+                    origin_cloth = self.cloth[self.phase2.index(img_path.split('/')[-1])]
+                    origin_cloth_pid, _ = map(int, pattern.search(origin_cloth).groups())
+                    origin_cloth_pid = pid2label[origin_cloth_pid]
+                    gen_info = [pid, origin_pose_pid, origin_cloth, pid]
+                
+                # add to dataset
+                dataset.append((img_path, pid, camid, gen_info))
 
         return dataset

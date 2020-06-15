@@ -227,7 +227,7 @@ def train(epoch, model, criterion, regularizer, optimizer, trainloader, use_gpu,
         open_all_layers(model)
 
     end = time.time()
-    for batch_idx, (imgs, pids, _, _) in enumerate(trainloader):
+    for batch_idx, (imgs, pids, _, _, gen_info) in enumerate(trainloader):
 
         try:
             limited = float(os.environ.get('limited', None))
@@ -243,7 +243,7 @@ def train(epoch, model, criterion, regularizer, optimizer, trainloader, use_gpu,
             imgs, pids = imgs.cuda(), pids.cuda()
 
         outputs = model(imgs)
-        loss = criterion(outputs, pids)
+        loss = criterion(outputs, pids, gen_info)
         if not fixbase:
             reg = regularizer(model)
             loss += reg

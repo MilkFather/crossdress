@@ -5,7 +5,7 @@ Test_ABD_Environment
 
 source abdenv/bin/activate
 cd ABD-Net
-python3 train.py -s market1501_ex -t market1501_ex \
+python3 train.py -s market1501_ex -t market1501 \
     --root $1 \
     --market1501_extra $2 \
     --flip-eval --eval-freq 1 \
