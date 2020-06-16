@@ -132,7 +132,7 @@ class Market1501_EX(BaseImageDataset):
 
     def _process_dirs(self, dir_path, relabel=False):
         pattern = re.compile(r'([-\d]+)_c(\d)')
-        pattern2 = re.compile(r'([-\d]+)_gen')
+        pattern2 = re.compile(r'([-\d]+)_([-\d]+)_([-\d]+)_gen')
         dataset = []
 
         pid_container = set()
