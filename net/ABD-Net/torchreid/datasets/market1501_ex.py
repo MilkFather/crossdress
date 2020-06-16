@@ -173,7 +173,9 @@ class Market1501_EX(BaseImageDataset):
                 if _dir == self.real_dir:
                     gen_info = [pid]
                 elif _dir == self.pose_dir:
-                    origin_pose = self.pose[self.phase1.index(img_path.split('/')[-1])]
+                    fn = img_path.split('/')[-1]
+                    pose_index = self.phase1.index(fn)
+                    origin_pose = self.pose[pose_index]
                     origin_pose_pid, _ = map(int, pattern.search(origin_pose).groups())
                     origin_pose_pid = pid2label[origin_pose_pid]
                     gen_info = [pid, origin_pose_pid]
