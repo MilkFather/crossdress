@@ -40,7 +40,7 @@ class Market1501_EX(BaseImageDataset):
         self.dataset_dir = osp.join(root, self.dataset_dir)
 
         # read info file, for reference
-        dataset_info = pd.read_csv(osp.join(self.dataset_dir, "market-annotation-train.csv"), header=0)
+        dataset_info = pd.read_csv(osp.join(self.dataset_dir, "market-gen-guide.csv"), header=0)
         self.shape = dataset_info["shape"]
         self.pose = dataset_info["pose"]
         self.cloth = dataset_info["cloth"]
