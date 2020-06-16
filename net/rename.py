@@ -35,8 +35,8 @@ for i in range(140000):
 
     os.system("mv ../market-1501/bounding_box_train_cloth/"+phase1_file+" ../market-1501/bounding_box_train_cloth/"+new_phase1)
     os.system("mv ../market-1501/bounding_box_train_pose/"+phase1_file+" ../market-1501/bounding_box_train_pose/"+new_phase1)
-    os.system("mv ../market-1501/bounding_box_train_cloth_pose/"+phase2_file+" ../market-1501/bounding_box_train_cloth/"+new_phase2)
-    os.system("mv ../market-1501/bounding_box_train_pose_cloth/"+phase2_file+" ../market-1501/bounding_box_train_pose/"+new_phase2)
+    os.system("mv ../market-1501/bounding_box_train_cloth_pose/"+phase2_file+" ../market-1501/bounding_box_train_cloth_pose/"+new_phase2)
+    os.system("mv ../market-1501/bounding_box_train_pose_cloth/"+phase2_file+" ../market-1501/bounding_box_train_pose_cloth/"+new_phase2)
 
     bar.next()
 
