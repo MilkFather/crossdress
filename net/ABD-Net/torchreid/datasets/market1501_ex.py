@@ -143,7 +143,7 @@ class Market1501_EX(BaseImageDataset):
                 if pattern.search(img_path) is not None:
                     pid, _ = map(int, pattern.search(img_path).groups())
                 else:
-                    pid = list(map(int, pattern2.search(img_path).groups()))[0]
+                    pid, _, _ = list(map(int, pattern2.search(img_path).groups()))[0]
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 pid_container.add(pid)
@@ -157,7 +157,7 @@ class Market1501_EX(BaseImageDataset):
                 if _dir == self.real_dir: # use pattern 1
                     pid, camid = map(int, pattern.search(img_path).groups())
                 else: # use pattern 2
-                    pid = list(map(int, pattern2.search(img_path).groups()))[0]
+                    pid, pose_pid, cloth_pid = list(map(int, pattern2.search(img_path).groups()))[0]
                     camid = 1  # fake camera id, actually we don't care
 
                 if pid == -1 and os.environ.get('junk') is None:
@@ -168,28 +168,19 @@ class Market1501_EX(BaseImageDataset):
                     camid -= 1  # index starts from 0
                 if relabel:
                     pid = pid2label[pid]
+                    if _dir != self.real_dir:
+                        pose_pid = pid2label[pose_pid]
+                        cloth_pid = pid2label[cloth_pid]
 
                 # we need to find out how generated files come from
                 if _dir == self.real_dir:
                     gen_info = [pid]
                 elif _dir == self.pose_dir:
-                    origin_pose = self.pose[self.phase1.index(img_path.split('/')[-1])]
-                    origin_pose_pid, _ = map(int, pattern.search(origin_pose).groups())
-                    origin_pose_pid = pid2label[origin_pose_pid]
-                    gen_info = [pid, origin_pose_pid]
+                    gen_info = [pid, pose_pid]
                 elif _dir == self.cloth_dir:
-                    origin_cloth = self.cloth[self.phase1.index(img_path.split('/')[-1])]
-                    origin_cloth_pid, _ = map(int, pattern.search(origin_cloth).groups())
-                    origin_cloth_pid = pid2label[origin_cloth_pid]
-                    gen_info = [pid, origin_cloth_pid]
+                    gen_info = [pid, cloth_pid]
                 else:
-                    origin_pose = self.pose[self.phase2.index(img_path.split('/')[-1])]
-                    origin_pose_pid, _ = map(int, pattern.search(origin_pose).groups())
-                    origin_pose_pid = pid2label[origin_pose_pid]
-                    origin_cloth = self.cloth[self.phase2.index(img_path.split('/')[-1])]
-                    origin_cloth_pid, _ = map(int, pattern.search(origin_cloth).groups())
-                    origin_cloth_pid = pid2label[origin_cloth_pid]
-                    gen_info = [pid, origin_pose_pid, origin_cloth, pid]
+                    gen_info = [pid, pose_pid, cloth_pid]
                 
                 # add to dataset
                 dataset.append((img_path, pid, camid, gen_info))

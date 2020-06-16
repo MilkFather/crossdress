@@ -43,9 +43,9 @@ def DatasetGenerateGuide(opts):
             if cloth_person_id != shape_person_id:
                 cloth_file_should_done = True
 
-        phase1_filename = shape_person_id + "_gen_" + hashlib.md5((shape_file + pose_file + cloth_file + "phase1").encode()).hexdigest()[:6] + ".jpg"
+        phase1_filename = shape_person_id + "_" + pose_person_id + "_" + cloth_person_id + "_gen_" + hashlib.md5((shape_file + pose_file + cloth_file + "phase1").encode()).hexdigest()[:6] + ".jpg"
 
-        phase2_filename = shape_person_id + "_gen_" + hashlib.md5((shape_file + pose_file + cloth_file + "phase2").encode()).hexdigest()[:6] + ".jpg"
+        phase2_filename = shape_person_id + "_" + pose_person_id + "_" + cloth_person_id + "_gen_" + hashlib.md5((shape_file + pose_file + cloth_file + "phase2").encode()).hexdigest()[:6] + ".jpg"
 
         dataset_gen.loc[len(dataset_gen)] = [shape_file, pose_file, cloth_file, phase1_filename, phase2_filename]
         bar.next()

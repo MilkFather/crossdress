@@ -233,7 +233,7 @@ def train(epoch, model, criterion, regularizer, optimizer, trainloader, use_gpu,
         open_all_layers(model)
 
     end = time.time()
-    for batch_idx, (imgs, pids, _, _, gen_info) in enumerate(trainloader):
+    for batch_idx, (imgs, pids, _, gen_info, _) in enumerate(trainloader):
 
         try:
             limited = float(os.environ.get('limited', None))
