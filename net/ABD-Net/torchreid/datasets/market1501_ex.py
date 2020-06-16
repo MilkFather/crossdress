@@ -143,7 +143,7 @@ class Market1501_EX(BaseImageDataset):
                 if pattern.search(img_path) is not None:
                     pid, _ = map(int, pattern.search(img_path).groups())
                 else:
-                    pid, _, _ = list(map(int, pattern2.search(img_path).groups()))[0]
+                    pid, _, _ = map(int, pattern2.search(img_path).groups())
                 if pid == -1 and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 pid_container.add(pid)
@@ -157,7 +157,7 @@ class Market1501_EX(BaseImageDataset):
                 if _dir == self.real_dir: # use pattern 1
                     pid, camid = map(int, pattern.search(img_path).groups())
                 else: # use pattern 2
-                    pid, pose_pid, cloth_pid = list(map(int, pattern2.search(img_path).groups()))[0]
+                    pid, pose_pid, cloth_pid = map(int, pattern2.search(img_path).groups())
                     camid = 1  # fake camera id, actually we don't care
 
                 if pid == -1 and os.environ.get('junk') is None:
