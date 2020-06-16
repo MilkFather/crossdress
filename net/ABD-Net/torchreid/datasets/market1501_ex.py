@@ -180,9 +180,10 @@ class Market1501_EX(BaseImageDataset):
                     origin_pose_pid = pid2label[origin_pose_pid]
                     gen_info = [pid, origin_pose_pid]
                 elif _dir == self.cloth_dir:
+                    print(type(self.phase1))
                     fn = img_path.split('/')[-1]
                     cloth_index = self.phase1.index(fn)
-                    origin_cloth = self.cloth[pose_index]
+                    origin_cloth = self.cloth[cloth_index]
                     #origin_cloth = self.cloth[self.phase1.index(img_path.split('/')[-1])]
                     origin_cloth_pid, _ = map(int, pattern.search(origin_cloth).groups())
                     origin_cloth_pid = pid2label[origin_cloth_pid]
