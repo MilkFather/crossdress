@@ -29,6 +29,8 @@ class CrossEntropyLossLSRO(nn.Module):
 
         log_probs = self.logsoftmax(inputs)
 
+        print(gen_info)
+
         targets2 = torch.zeros(log_probs.size())
         for idx, label in enumerate(gen_info):
             if len(label) == 1:
@@ -43,6 +45,7 @@ class CrossEntropyLossLSRO(nn.Module):
         if self.use_gpu:
             targets2 = targets2.cuda()
         targets2 = (1 - self.epsilon) * targets2 + self.epsilon / self.num_classes
+        print(targets2)
         loss = (- targets2 * log_probs).mean(0).sum()
         return loss
 
