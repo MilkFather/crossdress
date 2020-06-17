@@ -174,11 +174,11 @@ class Market1501_EX(BaseImageDataset):
 
                 # we need to find out how generated files come from
                 if _dir == self.real_dir:
-                    gen_info = [pid]
+                    gen_info = [pid, -1, -1]
                 elif _dir == self.pose_dir:
-                    gen_info = [pid, pose_pid]
+                    gen_info = [pid, pose_pid, -1]
                 elif _dir == self.cloth_dir:
-                    gen_info = [pid, cloth_pid]
+                    gen_info = [pid, cloth_pid, -1]
                 else:
                     gen_info = [pid, pose_pid, cloth_pid]
                 
