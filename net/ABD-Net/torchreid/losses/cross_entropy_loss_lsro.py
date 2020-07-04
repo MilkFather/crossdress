@@ -29,7 +29,10 @@ class CrossEntropyLossLSRO(nn.Module):
 
         log_probs = self.logsoftmax(inputs)
 
-        #print(gen_info)
+        cnt_real = 0
+        for idx in range(len(targets)):
+            if gen_info[1][idx] == -1:
+                cnt_real += 1
 
         targets2 = torch.zeros(log_probs.size())
         for idx in range(len(targets)):
@@ -40,17 +43,17 @@ class CrossEntropyLossLSRO(nn.Module):
             if label2 == -1:
                 targets2[idx][label1] += 1
             elif label3 == -1:
-                targets2[idx][label1] += 1 / 2
-                targets2[idx][label2] += 1 / 2
+                targets2[idx][label1] += (1 / 2) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
+                targets2[idx][label2] += (1 / 2) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
             else:
-                targets2[idx][label1] += 1 / 3
-                targets2[idx][label2] += 1 / 3
-                targets2[idx][label3] += 1 / 3
+                targets2[idx][label1] += (1 / 3) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
+                targets2[idx][label2] += (1 / 3) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
+                targets2[idx][label3] += (1 / 3) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
 
         if self.use_gpu:
             targets2 = targets2.cuda()
         targets2 = (1 - self.epsilon) * targets2 + self.epsilon / self.num_classes
-        #print(targets2)
+
         loss = (- targets2 * log_probs).mean(0).sum()
         return loss
 
