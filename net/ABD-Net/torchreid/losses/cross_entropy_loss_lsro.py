@@ -43,12 +43,12 @@ class CrossEntropyLossLSRO(nn.Module):
             if label2 == -1:
                 targets2[idx][label1] += 1
             elif label3 == -1:
-                targets2[idx][label1] += (1 / 2) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
-                targets2[idx][label2] += (1 / 2) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
+                targets2[idx][label1] += 1 / 2
+                targets2[idx][label2] += 1 / 2
             else:
-                targets2[idx][label1] += (1 / 3) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
-                targets2[idx][label2] += (1 / 3) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
-                targets2[idx][label3] += (1 / 3) * ((cnt_real / (len(targets) - cnt_real)) if cnt_real < 0.5 * len(targets) and cnt_real > 0 else 1)
+                targets2[idx][label1] += 1 / 3
+                targets2[idx][label2] += 1 / 3
+                targets2[idx][label3] += 1 / 3
 
         if self.use_gpu:
             targets2 = targets2.cuda()
