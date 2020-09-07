@@ -6,3 +6,4 @@ pandas
 scipy>=1.0.0,<=1.1.0
 torch>=0.4.1,<=1.0.0
 torchvision==0.2.1
+matplotlib
