@@ -62,7 +62,7 @@ class PRCC(BaseImageDataset):
             else:
                 cam_id=3
 
-            img_path=osp.join(self.dataset_dir,img_name)
+            img_path=osp.join(root,img_name)
             train.append((img_path, label, cam_id))
             line=f_train.readline()
 
@@ -83,7 +83,7 @@ class PRCC(BaseImageDataset):
             label=int(line.split(" ")[1])
             img_name=line.split(" ")[0]
             cam_id=1
-            img_path=osp.join(self.dataset_dir,img_name)
+            img_path=osp.join(root,img_name)
             gallery_list[label].append((img_path, label, cam_id))
             line=f_gallery.readline()
 
@@ -105,7 +105,7 @@ class PRCC(BaseImageDataset):
             label=int(line.split(" ")[1])
             img_name=line.split(" ")[0]
             cam_id=3
-            img_path=osp.join(self.dataset_dir,img_name)
+            img_path=osp.join(root,img_name)
             query.append((img_path, label, cam_id))
             line=f_query.readline()
 
