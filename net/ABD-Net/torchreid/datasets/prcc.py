@@ -88,7 +88,7 @@ class PRCC(BaseImageDataset):
             line=f_gallery.readline()
 
         for i in range(0,71):
-            print(len(gallery_list[i]))
+            #print(len(gallery_list[i]))
             shuffle = list(range(len(gallery_list[i])))
             random.shuffle(shuffle)
             gallery.append(gallery_list[i][shuffle[0]])
