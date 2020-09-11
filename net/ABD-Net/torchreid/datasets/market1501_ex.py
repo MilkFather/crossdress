@@ -35,6 +35,7 @@ class Market1501_EX(BaseImageDataset):
     # generated: 140000 (train)
     """
     dataset_dir = 'market-1501'
+    pid2label = {}
 
     def __init__(self, root='data', market1501_extra='real', market1501_extra_sample_size=20000, verbose=True, **kwargs):
         super(Market1501_EX, self).__init__()
@@ -70,12 +71,18 @@ class Market1501_EX(BaseImageDataset):
         # push data directories into a list
         self.train_dir = []
         for data_itm in market1501_data:
-            self.train_dir.append(data_mapping[data_itm])
+            if data_item != 'real':
+                self.train_dir.append(data_mapping[data_itm])
         # we don't change how we handle query and gallery
         self.query_dir = osp.join(self.dataset_dir, 'query')
         self.gallery_dir = osp.join(self.dataset_dir, 'bounding_box_test')
 
         self._check_before_run()
+
+        if 'real' in market1501_data:
+            self.train = self._process_dirs([self.real_dir], relabel=True)
+        else:
+            self.train = []
 
         train = self._process_dirs(self.train_dir, relabel=True)
         query = self._process_dir(self.query_dir, relabel=False)
@@ -85,7 +92,7 @@ class Market1501_EX(BaseImageDataset):
             print("=> Market1501_EX loaded")
             self.print_dataset_statistics(train, query, gallery)
 
-        self.train = random.sample(train, k=market1501_extra_sample_size)
+        self.train += random.sample(train, k=market1501_extra_sample_size)
         self.query = query
         self.gallery = gallery
 
@@ -149,7 +156,8 @@ class Market1501_EX(BaseImageDataset):
                     continue  # junk images are just ignored
                 pid_container.add(pid)
 
-        pid2label = {pid: label for label, pid in enumerate(pid_container)}
+        if self.pid2label == {}:
+            self.pid2label = {pid: label for label, pid in enumerate(pid_container)}
 
         for _dir in dir_path:
             img_paths = glob.glob(osp.join(_dir, '*.jpg'))
@@ -168,10 +176,10 @@ class Market1501_EX(BaseImageDataset):
                     assert 1 <= camid <= 6
                     camid -= 1  # index starts from 0
                 if relabel:
-                    pid = pid2label[pid]
+                    pid = self.pid2label[pid]
                     if _dir != self.real_dir:
-                        pose_pid = pid2label[pose_pid]
-                        cloth_pid = pid2label[cloth_pid]
+                        pose_pid = self.pid2label[pose_pid]
+                        cloth_pid = self.pid2label[cloth_pid]
 
                 # we need to find out how generated files come from
                 if _dir == self.real_dir:
