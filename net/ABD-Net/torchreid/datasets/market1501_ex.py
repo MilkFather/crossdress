@@ -71,7 +71,7 @@ class Market1501_EX(BaseImageDataset):
         # push data directories into a list
         self.train_dir = []
         for data_itm in market1501_data:
-            if data_item != 'real':
+            if data_itm != 'real':
                 self.train_dir.append(data_mapping[data_itm])
         # we don't change how we handle query and gallery
         self.query_dir = osp.join(self.dataset_dir, 'query')
