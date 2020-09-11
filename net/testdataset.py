@@ -3,7 +3,7 @@ import os
 
 if __name__ == "__main__":
     opts = TestOptions().parse_args()
-    if not opts.use_resnet:
-        os.system("./script/testdataset.sh \"{0}\" {1}".format(os.path.join("..", opts.dataroot), '+'.join(opts.use_data)))
-    else:
-        os.system("./script/validatedataset.sh \"{0}\" {1}".format(os.path.join("..", opts.dataroot), '+'.join(opts.use_data)))
+    #if not opts.use_resnet:
+    os.system("./script/testdataset.sh \"{0}\" {1} {2}".format(os.path.join("..", opts.dataroot), '+'.join(opts.use_data), str(opts.sample_size)))
+    #else:
+    #    os.system("./script/validatedataset.sh \"{0}\" {1}".format(os.path.join("..", opts.dataroot), '+'.join(opts.use_data)))

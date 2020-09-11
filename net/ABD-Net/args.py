@@ -26,6 +26,7 @@ def argument_parser():
                         help="sampler for trainloader")
     parser.add_argument('--data-augment', type=str, nargs='+', choices=['none', 'crop', 'random-erase', 'color-jitter', 'crop,random-erase', 'crop,color-jitter', 'crop,color-jitter,random-erase'], default='crop')
     parser.add_argument('--market1501_extra', type=str, default='real', help="for market1501_ex dataset only: choose what generated data are used")
+    parser.add_argument('--market1501_extra_sample_size', type=int, default=20000, help="for market1501_ex only: select a portion of the whole dataset for training")
     # ************************************************************
     # Video datasets
     # ************************************************************
@@ -217,6 +218,7 @@ def image_dataset_kwargs(parsed_args):
         'cuhk03_classic_split': parsed_args.cuhk03_classic_split,
         'data_augment': parsed_args.data_augment,
         'market1501_extra': parsed_args.market1501_extra,
+        'market1501_extra_sample_size': parsed_args.market1501_extra_sample_size,
         # 'flip_eval': parsed_args.flip_eval,
     }
 

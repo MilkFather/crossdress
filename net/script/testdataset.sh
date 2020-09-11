@@ -8,6 +8,7 @@ cd ABD-Net
 python3 train.py -s market1501_ex -t prcc \
     --root $1 \
     --market1501_extra $2 \
+    --market1501_extra_sample_size $3 \
     --flip-eval --eval-freq 1 \
     --label-smooth \
     --criterion xentlsro \

@@ -15,6 +15,7 @@ import numpy as np
 import h5py
 import pandas as pd
 from scipy.misc import imsave
+import random
 
 from .bases import BaseImageDataset
 
@@ -35,7 +36,7 @@ class Market1501_EX(BaseImageDataset):
     """
     dataset_dir = 'market-1501'
 
-    def __init__(self, root='data', market1501_extra='real', verbose=True, **kwargs):
+    def __init__(self, root='data', market1501_extra='real', market1501_extra_sample_size=20000, verbose=True, **kwargs):
         super(Market1501_EX, self).__init__()
         self.dataset_dir = osp.join(root, self.dataset_dir)
 
@@ -84,7 +85,7 @@ class Market1501_EX(BaseImageDataset):
             print("=> Market1501_EX loaded")
             self.print_dataset_statistics(train, query, gallery)
 
-        self.train = train
+        self.train = random.sample(train, k=market1501_extra_sample_size)
         self.query = query
         self.gallery = gallery
 
