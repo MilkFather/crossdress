@@ -54,7 +54,8 @@ class ImageDataManager(BaseDataManager):
                  num_instances=4,  # number of instances per identity (for RandomIdentitySampler)
                  cuhk03_labeled=False,  # use cuhk03's labeled or detected images
                  cuhk03_classic_split=False,  # use cuhk03's classic split or 767/700 split
-                 market1501_extra='real'  # use market1501_ex dataset's partions
+                 market1501_extra='real',  # use market1501_ex dataset's partions
+                 market1501_extra_sample_size=20000 # use market1501_ex sample size
                  ):
         super(ImageDataManager, self).__init__()
         self.use_gpu = use_gpu
@@ -72,6 +73,7 @@ class ImageDataManager(BaseDataManager):
         self.cuhk03_labeled = cuhk03_labeled
         self.cuhk03_classic_split = cuhk03_classic_split
         self.market1501_extra = market1501_extra
+        self.market1501_extra_sample_size = market1501_extra_sample_size
         self.pin_memory = True if self.use_gpu else False
 
         # Build train and test transform functions
