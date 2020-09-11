@@ -21,7 +21,7 @@ python3 train.py -s market1501_ex -t prcc \
     --optim adam --lr 0.0003 \
     --stepsize 20 40 \
     --gpu-devices 0,1,2,3 \
-    --fixbase-epoch 10 \
+    --fixbase-epoch 20 \
     --max-epoch 80 \
     --save-dir model \
     --arch resnet50 \
