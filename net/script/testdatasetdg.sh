@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . script/testenv.sh
-Test_Cloth_Environment
+Test_Dress_Environment
 
 source dressenv/bin/activate
 cd DG-Net
