@@ -3,7 +3,7 @@
 . script/testenv.sh
 Test_Cloth_Environment
 
-source clothenv/bin/activate
+source dressenv/bin/activate
 cd DG-Net
 python3 train.py --config configs/latest.yaml
 cd reid_eval
