@@ -22,4 +22,3 @@ class TestOptions(argparse.ArgumentParser):
         self.add_argument("--use_data", required=True, nargs='+')
         #self.add_argument("--use_resnet", action="store_true")
         self.add_argument("--sample_size", required=False, type=int, default=20000)
-        self.add_argument("--use_network", required=True, type=str)
