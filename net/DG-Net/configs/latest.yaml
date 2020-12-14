@@ -11,7 +11,7 @@ beta1: 0                         # Adam hyperparameter
 beta2: 0.999                     # Adam hyperparameter
 crop_image_height: 256           # Input height
 crop_image_width: 128            # Input width
-data_root: ../Market/pytorch/    # Dataset Root
+data_root: ../../data/market-1501/    # Dataset Root
 dis:              
   LAMBDA: 0.01                   # the hyperparameter for the regularization term
   activ: lrelu                   # activation function style [relu/lrelu/prelu/selu/tanh]
