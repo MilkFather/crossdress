@@ -53,7 +53,7 @@ lr_d: 0.0001                     # initial discriminator learning rate
 lr_g: 0.0001                     # initial generator (except appearance encoder) learning rate
 lr_policy: multistep             # learning rate scheduler [multistep|constant|step]
 max_cyc_w: 2                     # the maximum weight for cycle loss
-max_iter: 100000                 # When you end the training
+max_iter: 5000                   # When you end the training
 max_teacher_w: 2                 # the maximum weight for prime loss (teacher KL loss)
 max_w: 1                         # the maximum weight for feature reconstruction losses
 new_size: 128                    # the resized size  
