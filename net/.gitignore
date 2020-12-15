@@ -1,2 +1,7 @@
 **/__pycache__/*
+.torch/*
+abdenv/*
+poseenv/*
+dressenv/*
+venv/*
 !**/.gitkeep
