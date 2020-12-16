@@ -12,6 +12,7 @@ try:
     from itertools import izip as zip
 except ImportError: # will be 3.x series
     pass
+import gc
 import os
 import sys
 import tensorboardX
@@ -114,6 +115,15 @@ while True:
                 trainer.gen_update(x_ab, x_ba, s_a, s_b, f_a, f_b, p_a, p_b, pp_a, pp_b, x_a_recon, x_b_recon, x_a_recon_p, x_b_recon_p, images_a, images_b, pos_a, pos_b, labels_a, labels_b, config, iterations, num_gpu=1)
 
             torch.cuda.synchronize()
+
+        del images_a
+        del images_b
+        del pos_a
+        del pos_b
+        del labels_a
+        del labels_b
+        gc.collect()
+        torch.cuda.empty_cache()
 
         # Dump training stats in log file
         if (iterations + 1) % config['log_iter'] == 0:
