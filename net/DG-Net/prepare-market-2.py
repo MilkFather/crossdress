@@ -138,14 +138,6 @@ for root, dirs, files in os.walk(train_path, topdown=True):
         copyfile(src_path, dst_path + '/' + name)
 
 train_path = download_path + '/bounding_box_train_pose'
-ls = []
-for root, dirs, files in os.walk(train_path, topdown=True):
-    for name in files:
-        if not name[-3:]=='jpg':
-            continue
-        ls.append(name)
-
-random.shuffle(ls)
 cp_cnt = 0
 for name in ls:
     ID  = name.split('_')
