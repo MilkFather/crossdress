@@ -7,6 +7,7 @@ A modified version of prepare-market.py
 """
 
 import os
+import random
 from shutil import copyfile
 
 # You only need to change this line to your dataset download path
@@ -93,16 +94,25 @@ for root, dirs, files in os.walk(train_path, topdown=True):
         copyfile(src_path, dst_path + '/' + name)
 
 train_path = download_path + '/bounding_box_train_pose'
+ls = []
 for root, dirs, files in os.walk(train_path, topdown=True):
     for name in files:
         if not name[-3:]=='jpg':
             continue
-        ID  = name.split('_')
-        src_path = train_path + '/' + name
-        dst_path = train_save_path + '/' + ID[0]
-        if not os.path.isdir(dst_path):
-            os.mkdir(dst_path)
-        copyfile(src_path, dst_path + '/' + name)
+        ls.append(name)
+
+random.shuffle(ls)
+cp_cnt = 0
+for name in ls:
+    ID  = name.split('_')
+    src_path = train_path + '/' + name
+    dst_path = train_save_path + '/' + ID[0]
+    if not os.path.isdir(dst_path):
+        os.mkdir(dst_path)
+    copyfile(src_path, dst_path + '/' + name)
+    cp_cnt += 1
+    if cp_cnt >= 12000:
+        break
 
 
 #---------------------------------------
@@ -128,13 +138,22 @@ for root, dirs, files in os.walk(train_path, topdown=True):
         copyfile(src_path, dst_path + '/' + name)
 
 train_path = download_path + '/bounding_box_train_pose'
+ls = []
 for root, dirs, files in os.walk(train_path, topdown=True):
     for name in files:
         if not name[-3:]=='jpg':
             continue
-        ID  = name.split('_')
-        src_path = train_path + '/' + name
-        dst_path = train_save_path + '/' + ID[0]
-        if not os.path.isdir(dst_path):
-            os.mkdir(dst_path)
-        copyfile(src_path, dst_path + '/' + name)
+        ls.append(name)
+
+random.shuffle(ls)
+cp_cnt = 0
+for name in ls:
+    ID  = name.split('_')
+    src_path = train_path + '/' + name
+    dst_path = train_save_path + '/' + ID[0]
+    if not os.path.isdir(dst_path):
+        os.mkdir(dst_path)
+    copyfile(src_path, dst_path + '/' + name)
+    cp_cnt += 1
+    if cp_cnt >= 12000:
+        break
