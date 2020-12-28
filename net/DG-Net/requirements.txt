@@ -8,3 +8,4 @@ pyyaml
 opencv-python
 scipy
 tensorboardX
+matplotlib

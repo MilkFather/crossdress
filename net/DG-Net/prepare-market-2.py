@@ -110,7 +110,7 @@ for name in ls:
     if not os.path.isdir(dst_path):
         os.mkdir(dst_path)
     copyfile(src_path, dst_path + '/' + name)
-    cp_cnt += 1
+    #cp_cnt += 1
     if cp_cnt >= 12000:
         break
 
@@ -146,6 +146,6 @@ for name in ls:
     if not os.path.isdir(dst_path):
         os.mkdir(dst_path)
     copyfile(src_path, dst_path + '/' + name)
-    cp_cnt += 1
+    #cp_cnt += 1
     if cp_cnt >= 12000:
         break
