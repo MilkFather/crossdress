@@ -36,30 +36,30 @@ class TransferModel(BaseModel):
                                         opt.ngf, opt.which_model_netG, opt.norm, not opt.no_dropout, opt.init_type, self.gpu_ids,
                                         n_downsampling=opt.G_n_downsampling)
 
-        if self.isTrain:
-            use_sigmoid = opt.no_lsgan
-            if opt.with_D_PB:
-                self.netD_PB = networks.define_D(opt.P_input_nc+opt.BP_input_nc, opt.ndf,
-                                            opt.which_model_netD,
-                                            opt.n_layers_D, opt.norm, use_sigmoid, opt.init_type, self.gpu_ids,
-                                            not opt.no_dropout_D,
-                                            n_downsampling = opt.D_n_downsampling)
+        #if self.isTrain:
+        #    use_sigmoid = opt.no_lsgan
+        #    if opt.with_D_PB:
+        self.netD_PB = networks.define_D(opt.P_input_nc+opt.BP_input_nc, opt.ndf,
+                                    opt.which_model_netD,
+                                    opt.n_layers_D, opt.norm, use_sigmoid, opt.init_type, self.gpu_ids,
+                                    not opt.no_dropout_D,
+                                    n_downsampling = opt.D_n_downsampling)
 
-            if opt.with_D_PP:
-                self.netD_PP = networks.define_D(opt.P_input_nc+opt.P_input_nc, opt.ndf,
-                                            opt.which_model_netD,
-                                            opt.n_layers_D, opt.norm, use_sigmoid, opt.init_type, self.gpu_ids,
-                                            not opt.no_dropout_D,
-                                            n_downsampling = opt.D_n_downsampling)
+        #    if opt.with_D_PP:
+        self.netD_PP = networks.define_D(opt.P_input_nc+opt.P_input_nc, opt.ndf,
+                                    opt.which_model_netD,
+                                    opt.n_layers_D, opt.norm, use_sigmoid, opt.init_type, self.gpu_ids,
+                                    not opt.no_dropout_D,
+                                    n_downsampling = opt.D_n_downsampling)
 
         if not self.isTrain or opt.continue_train:
             which_epoch = opt.which_epoch
             self.load_network(self.netG, 'netG', which_epoch)
-            if self.isTrain:
-                if opt.with_D_PB:
-                    self.load_network(self.netD_PB, 'netD_PB', which_epoch)
-                if opt.with_D_PP:
-                    self.load_network(self.netD_PP, 'netD_PP', which_epoch)
+            #if self.isTrain:
+            if opt.with_D_PB:
+                self.load_network(self.netD_PB, 'netD_PB', which_epoch)
+            if opt.with_D_PP:
+                self.load_network(self.netD_PP, 'netD_PP', which_epoch)
 
 
         if self.isTrain:
@@ -211,6 +211,16 @@ class TransferModel(BaseModel):
         fake_PP = self.fake_PP_pool.query( torch.cat((self.fake_p2, self.input_P1), 1).data )
         loss_D_PP = self.backward_D_basic(self.netD_PP, real_PP, fake_PP)
         self.loss_D_PP = loss_D_PP.data[0]
+
+    def get_D_PB(self):
+        fake_PB = torch.cat((self.fake_p2, self.input_BP2), 1).data
+        pred_fake = netD(fake_PB.detach())
+        return pred_fake
+
+    def get_D_PP(self):
+        fake_PP = torch.cat((self.fake_p2, self.input_P1), 1).data
+        pred_fake = netD(fake_PP.detach())
+        return pred_fake
 
 
     def optimize_parameters(self):

@@ -62,9 +62,13 @@ for i, data in enumerate(dataset):
         break
     model.set_input(data)
     model.test()
+    PP_score = model.get_D_PP()
+    PB_score = model.get_D_PB()
     im = util.tensor2im(model.fake_p2.data)
     save_path = os.path.join(opt.output_dir, opt.output_files[i])
     util.save_image(im, save_path)
+
+    print(PP_score, PB_score)
 
     bar.next()
 bar.finish()
