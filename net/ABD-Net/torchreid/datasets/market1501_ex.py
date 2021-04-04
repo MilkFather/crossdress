@@ -119,7 +119,7 @@ class Market1501_EX(BaseImageDataset):
         pid_container = set()
         for img_path in img_paths:
             pid, _ = map(int, pattern.search(img_path).groups())
-            if pid == -1 and os.environ.get('junk') is None:
+            if pid == -1:# and os.environ.get('junk') is None:
                 continue  # junk images are just ignored
             pid_container.add(pid)
         pid2label = {pid: label for label, pid in enumerate(pid_container)}
@@ -127,7 +127,7 @@ class Market1501_EX(BaseImageDataset):
         dataset = []
         for img_path in img_paths:
             pid, camid = map(int, pattern.search(img_path).groups())
-            if pid == -1 and os.environ.get('junk') is None:
+            if pid == -1:# and os.environ.get('junk') is None:
                 continue  # junk images are just ignored
             assert -1 <= pid <= 1501  # pid == 0 means background
             assert 1 <= camid <= 6
@@ -152,7 +152,7 @@ class Market1501_EX(BaseImageDataset):
                     pid, _ = map(int, pattern.search(img_path).groups())
                 else:
                     pid, _, _ = map(int, pattern2.search(img_path).groups())
-                if pid == -1 and os.environ.get('junk') is None:
+                if pid == -1:# and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 pid_container.add(pid)
 
@@ -169,7 +169,7 @@ class Market1501_EX(BaseImageDataset):
                     pid, pose_pid, cloth_pid = map(int, pattern2.search(img_path).groups())
                     camid = 1  # fake camera id, actually we don't care
 
-                if pid == -1 and os.environ.get('junk') is None:
+                if pid == -1:# and os.environ.get('junk') is None:
                     continue  # junk images are just ignored
                 assert -1 <= pid <= 1501  # pid == 0 means background
                 if camid is int:

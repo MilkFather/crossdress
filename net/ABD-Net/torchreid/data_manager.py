@@ -89,7 +89,8 @@ class ImageDataManager(BaseDataManager):
         for name in self.source_names:
             dataset = init_imgreid_dataset(
                 root=self.root, name=name, split_id=self.split_id, cuhk03_labeled=self.cuhk03_labeled,
-                cuhk03_classic_split=self.cuhk03_classic_split, market1501_extra=self.market1501_extra
+                cuhk03_classic_split=self.cuhk03_classic_split, market1501_extra=self.market1501_extra,
+                market1501_extra_sample_size = market1501_extra_sample_size
             )
 
             for img_path, pid, camid, gen_info in dataset.train:
